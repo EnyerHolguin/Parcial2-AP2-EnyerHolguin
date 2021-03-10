@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Parcial2_AP2_EnyerHolguin.BLL;
 using Parcial2_AP2_EnyerHolguin.DAL;
 using Parcial2_AP2_EnyerHolguin.Data;
 using System;
@@ -36,7 +37,9 @@ namespace Parcial2_AP2_EnyerHolguin
 
                        );
 
-     
+            services.AddTransient<VentasBLL>();
+            services.AddTransient<CobrosBLL>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
