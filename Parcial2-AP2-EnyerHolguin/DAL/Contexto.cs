@@ -9,6 +9,13 @@ namespace Parcial2_AP2_EnyerHolguin.DAL
 {
     public class Contexto :DbContext
     {
+
+        public DbSet<Clientes> Cliente { get; set; }
+        public DbSet<Ventas> Venta { get; set; }
+        public DbSet<Cobros> Cobro { get; set; }
+
+        public Contexto(DbContextOptions<Contexto> option) : base(option) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         {

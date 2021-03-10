@@ -10,6 +10,8 @@ namespace Parcial2_AP2_EnyerHolguin.Models
     {
         [Key]
         public int ClienteId { get; set; }
+
+        [Required(ErrorMessage = "Debe Escribir un Nombres.")]
         public string Nombres { get; set; }
     }
 }
