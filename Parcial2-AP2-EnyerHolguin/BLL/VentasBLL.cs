@@ -11,7 +11,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
 {
     public class VentasBLL
     {
-        private Contexto _contexto { get; set; }
+        public Contexto _contexto { get; set; }
 
         public VentasBLL(Contexto contexto)
         {
@@ -90,8 +90,17 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
             {
                 venta = await _contexto.Venta
                     .Where(s => s.VentaId == id)
+                    .Include(s => s.Cliente)
                     .AsNoTracking()
                     .SingleOrDefaultAsync();
+                var entidad = _contexto
+                    .Set<Ventas>()
+                    .Local.SingleOrDefault(s => s.VentaId == id);
+
+                if (entidad != null)
+                {
+                    _contexto.Entry(entidad).State = EntityState.Detached;
+                }
             }
             catch (Exception)
             {
