@@ -36,9 +36,10 @@ namespace Parcial2_AP2_EnyerHolguin
                         options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
 
                        );
-
+            services.AddTransient<ClientesBLL>();
             services.AddTransient<VentasBLL>();
             services.AddTransient<CobrosBLL>();
+           
 
         }
 
