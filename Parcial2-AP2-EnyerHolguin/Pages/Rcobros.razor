@@ -102,6 +102,7 @@
             </div>
 
         </div>
+        <h3>@Mensaje</h3>
 
         <div class="card-footer">
             <div class="form-group text-center">
@@ -116,6 +117,11 @@
 
 
 @code {
+    string Mensaje = string.Empty;
+
+    [Inject]
+    private CobrosBLL cobrosBLL { get; set; }
+
     [Parameter]
     public int CobroId { get; set; }
 
@@ -123,8 +129,60 @@
 
     protected override void OnInitialized()
     {
-
+        Limpiar();
     }
 
-   
+    private void Nuevo()
+    {
+        Limpiar();
+    }
+
+    private async void Buscar()
+    {
+        var registro = await cobrosBLL.Buscar(this.CobroId);
+
+        if (registro != null)
+        {
+            this.Cobro = registro;
+        }
+        else
+        {
+
+            Mensaje = ("No pudo ser encontrado.");
+        }
+    }
+
+    private async void Guardar()
+    {
+        Cobro.CobroId = this.CobroId;
+        if (await cobrosBLL.Guardar(Cobro))
+        {
+            Mensaje = ("Guardado con existo");
+            Limpiar();
+        }
+        else
+        {
+            Mensaje = ("No pudo ser guardado.");
+        }
+    }
+
+    private async void Eliminar()
+    {
+        if (await cobrosBLL.Eliminar(this.CobroId))
+        {
+            Mensaje = ("Eliminado con existo");
+            Limpiar();
+        }
+        else
+        {
+            Mensaje = ("No pudo ser eliminado.");
+        }
+    }
+
+    private void Limpiar()
+    {
+        this.Cobro = new Cobros();
+        this.CobroId = 0;
+    }
+
 }
