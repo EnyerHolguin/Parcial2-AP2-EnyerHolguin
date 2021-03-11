@@ -1,5 +1,148 @@
-﻿<h3>CVentas</h3>
+﻿@using Parcial2_AP2_EnyerHolguin.BLL;
+@using Parcial2_AP2_EnyerHolguin.Models;
+
+@page "/cVentas"
+
+
+<div class="card">
+    <div class="card-header">
+        <h3>Consulta Ventas</h3>
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+
+            <div class="col">
+                <div class="form-group row">
+                    <label class="col-form-label">Filtro</label>
+
+                    <div class="col-sm-9">
+                        <select @bind="opcion" class="form-control">
+                            @foreach (var item in filtro)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group row">
+                    <label class="col-form-label">Criterio</label>
+                    <div class="input-group col-sm-10">
+                        <input @bind="criterio" type="text" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" style="z-index:0" class="btn btn-primary" @onclick="Buscar">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-responsive text-nowrap" style="position: relative; height:200px; overflow: auto; display: block;">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Monto</th>
+                        <th>Balance</th>
+
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    @foreach (var item in ventasList)
+                    {
+                        <tr>
+                            <td>@item.VentaId</td>
+                            <td>@item.Fecha</td>
+                            <td>@item.Cliente.Nombres</td>
+                            <td>@item.Monto</td>
+                            <td>@item.Balance</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
 
 @code {
 
-}
+        string Mensaje = string.Empty;
+
+
+    public VentasBLL ventasBLL { get; set; }
+
+    private string[] filtro = { "Id", "Nombre Cliente", "Monto", "Balance", "Todo" };
+    private string opcion;
+    private string criterio;
+    List<Ventas> ventasList = new List<Ventas>();
+
+    protected override void OnInitialized()
+    {
+        opcion = "";
+        criterio = "";
+
+    }
+
+
+    private async void Buscar()
+    {
+        ventasList = new List<Ventas>();
+
+        switch (opcion)
+        {
+            case "Id":
+                int id;
+
+                bool validoId = Int32.TryParse(criterio, out id);
+                if (validoId)
+                {
+                    ventasList = await ventasBLL.GetList(v => v.VentaId == id);
+                }
+                else
+                {
+                    Mensaje =("El Id no es valido.");
+                }
+                break;
+            case "Nombre Cliente":
+                ventasList = await ventasBLL.(v => v.Cliente.Nombres == criterio);
+                break;
+
+            case "Monto":
+                double monto;
+
+                bool validoMonto = Double.TryParse(criterio, out monto);
+                if (validoMonto)
+                {
+                    ventasList = await ventasBLL.GetList(v => v.Monto == monto);
+                }
+                else
+                {
+                    Mensaje = ("debe introducido un valor numerico.");
+                }
+                break;
+            case "Balance":
+                double balance;
+
+                bool validoBalance = Double.TryParse(criterio, out balance);
+                if (validoBalance)
+                {
+                    ventasList = await ventasBLL.GetList(v => v.Balance == balance);
+                }
+                else
+                {
+                    Mensaje =("debe introducido un valor numerico.");
+                }
+                break;
+            case "Todo":
+                ventasList = await ventasBLL.GetList(v => true);
+                break;
+        }
+    }

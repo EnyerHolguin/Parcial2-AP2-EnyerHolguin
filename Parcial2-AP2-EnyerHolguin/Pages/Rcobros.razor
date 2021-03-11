@@ -15,9 +15,9 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="form-group row">
-                            <label class="col-sm-1 col-form-label">Id</label>
+                            <label class="col-form-label">Id</label>
                             <div class="input-group col-sm-10">
-                                <InputNumber @bind-Value="this.CobroId" class="form-control col-3" />
+                                <InputNumber @bind-Value="this.CobroId" class="form-control col-4" />
                                 <div class="input-group-append">
                                     <button type="button" style="z-index:0" class="btn btn-primary" @onclick="Buscar">Buscar</button>
                                 </div>
@@ -30,7 +30,7 @@
                             <label class="col-form-label">Fecha</label>
 
                             <div class="col-sm-9">
-                                <InputDate @bind-Value="Cobro.Fecha" class="form-control col-4" />
+                                <InputDate @bind-Value="Cobro.Fecha" class="form-control " />
                             </div>
 
                         </div>
@@ -120,7 +120,9 @@
     string Mensaje = string.Empty;
 
     [Inject]
-    private CobrosBLL cobrosBLL { get; set; }
+    public CobrosBLL cobrosBLL { get; set; }
+    [Inject]
+    public VentasBLL ventasBLL { get; set; }
 
     [Parameter]
     public int CobroId { get; set; }
