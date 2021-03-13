@@ -132,21 +132,27 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
             return ok;
         }
 
-        public async Task<List<Ventas>> GetSuplidores(Expression<Func<Ventas, bool>> criterio)
+        public List<Ventas> GetList(Expression<Func<Ventas, bool>> expression)
         {
-            List<Ventas> lista = new List<Ventas>();
+            List<Ventas> Listado;
 
             try
             {
-                lista = await _contexto.Venta.Where(criterio).ToListAsync();
+                Listado = _contexto.Venta.Where(expression).ToList();
+
             }
             catch (Exception)
             {
-
                 throw;
+
+            }
+            finally
+            {
+                _contexto.Dispose();
+
             }
 
-            return lista;
+            return Listado;
         }
 
         private void Detached(int VentasId)

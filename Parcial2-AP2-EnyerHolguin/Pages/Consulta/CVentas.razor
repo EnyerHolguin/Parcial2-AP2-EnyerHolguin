@@ -74,7 +74,7 @@
 
 @code {
 
-        string Mensaje = string.Empty;
+    string Mensaje = string.Empty;
 
 
     public VentasBLL ventasBLL { get; set; }
@@ -95,6 +95,8 @@
     private async void Buscar()
     {
         ventasList = new List<Ventas>();
+        //ventasList = ventasBLL.GetList(e => true);
+
 
         switch (opcion)
         {
@@ -104,15 +106,15 @@
                 bool validoId = Int32.TryParse(criterio, out id);
                 if (validoId)
                 {
-                    ventasList = await ventasBLL.GetList(v => v.VentaId == id);
+                    ventasList = ventasBLL.GetList(v => v.VentaId == id);
                 }
                 else
                 {
-                    Mensaje =("El Id no es valido.");
+                    Mensaje = ("El Id no es valido.");
                 }
                 break;
             case "Nombre Cliente":
-                ventasList = await ventasBLL.(v => v.Cliente.Nombres == criterio);
+                ventasList = ventasBLL.GetList(v => v.Cliente.Nombres == criterio);
                 break;
 
             case "Monto":
@@ -121,7 +123,7 @@
                 bool validoMonto = Double.TryParse(criterio, out monto);
                 if (validoMonto)
                 {
-                    ventasList = await ventasBLL.GetList(v => v.Monto == monto);
+                    ventasList = ventasBLL.GetList(v => v.Monto == monto);
                 }
                 else
                 {
@@ -134,15 +136,16 @@
                 bool validoBalance = Double.TryParse(criterio, out balance);
                 if (validoBalance)
                 {
-                    ventasList = await ventasBLL.GetList(v => v.Balance == balance);
+                    ventasList = ventasBLL.GetList(v => v.Balance == balance);
                 }
                 else
                 {
-                    Mensaje =("debe introducido un valor numerico.");
+                    Mensaje = ("debe introducido un valor numerico.");
                 }
                 break;
             case "Todo":
-                ventasList = await ventasBLL.GetList(v => true);
+                ventasList = ventasBLL.GetList(v => true);
                 break;
         }
     }
+}

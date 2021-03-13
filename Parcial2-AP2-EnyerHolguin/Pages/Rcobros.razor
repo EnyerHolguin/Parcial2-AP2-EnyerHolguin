@@ -127,6 +127,9 @@
     [Parameter]
     public int CobroId { get; set; }
 
+    private List<Clientes> listaCliente = new List<Clientes>();
+    private List<Ventas> listaFactura = new List<Ventas>();
+
     private Cobros Cobro = new Cobros();
 
     protected override void OnInitialized()
