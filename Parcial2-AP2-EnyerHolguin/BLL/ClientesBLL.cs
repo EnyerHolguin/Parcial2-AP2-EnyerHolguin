@@ -18,13 +18,14 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
             this._contexto = contexto;
         }
 
-        public async Task<List<Clientes>> GetList(Expression<Func<Clientes, bool>> criterio)
+        public async Task<List<Clientes>> GetList(Expression<Func<Clientes, bool>> cliente)
         {
             List<Clientes> lista = new List<Clientes>();
+      
 
             try
             {
-                lista = await _contexto.Cliente.Where(criterio).ToListAsync();
+                lista = await _contexto.Cliente.Where(cliente).ToListAsync();
             }
             catch (Exception)
             {

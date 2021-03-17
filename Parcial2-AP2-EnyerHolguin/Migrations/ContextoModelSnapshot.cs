@@ -97,9 +97,14 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     b.Property<double>("Monto")
                         .HasColumnType("REAL");
 
+                    b.Property<int?>("VentaId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CobroId");
+
+                    b.HasIndex("VentaId");
 
                     b.ToTable("CobrosDetalles");
                 });
@@ -192,11 +197,19 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
 
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.CobrosDetalles", b =>
                 {
-                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Cobros", null)
+                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Cobros", "Cobro")
                         .WithMany("CobrosDetalle")
                         .HasForeignKey("CobroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Ventas", "Venta")
+                        .WithMany("cobrosDetalle")
+                        .HasForeignKey("VentaId");
+
+                    b.Navigation("Cobro");
+
+                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Ventas", b =>
@@ -213,6 +226,11 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Cobros", b =>
                 {
                     b.Navigation("CobrosDetalle");
+                });
+
+            modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Ventas", b =>
+                {
+                    b.Navigation("cobrosDetalle");
                 });
 #pragma warning restore 612, 618
         }

@@ -38,10 +38,12 @@
 
                 </div>
                 <br />
+
                 <div class="form-group row ">
-                    <label class="col-form-label">Cliente</label>
-                    <div class="col-sm-11">
-                        <InputSelect @bind-Value="Cobro.ClienteId" class="form-control col-4" />
+                    <label class="col-form-label">Cliente ID</label>
+                    <div class="input-group">
+                        <InputNumber @bind-Value="this.listaCliente" class="form-control  " />
+                        
                     </div>
                 </div>
 
@@ -190,4 +192,5 @@
         this.CobroId = 0;
     }
 
+   
 }

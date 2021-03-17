@@ -75,7 +75,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Monto = table.Column<double>(type: "REAL", nullable: false),
                     Balance = table.Column<double>(type: "REAL", nullable: false),
-                    Cobrado = table.Column<double>(type: "REAL", nullable: false)
+                    Cobrado = table.Column<double>(type: "REAL", nullable: false),
+                    VentaId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,6 +87,12 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                         principalTable: "Cobro",
                         principalColumn: "CobroId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CobrosDetalles_Venta_VentaId",
+                        column: x => x.VentaId,
+                        principalTable: "Venta",
+                        principalColumn: "VentaId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -144,6 +151,11 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                 column: "CobroId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CobrosDetalles_VentaId",
+                table: "CobrosDetalles",
+                column: "VentaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Venta_ClienteId",
                 table: "Venta",
                 column: "ClienteId");
@@ -155,10 +167,10 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                 name: "CobrosDetalles");
 
             migrationBuilder.DropTable(
-                name: "Venta");
+                name: "Cobro");
 
             migrationBuilder.DropTable(
-                name: "Cobro");
+                name: "Venta");
 
             migrationBuilder.DropTable(
                 name: "Cliente");

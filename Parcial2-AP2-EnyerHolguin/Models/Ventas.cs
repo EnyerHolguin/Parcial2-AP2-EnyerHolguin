@@ -20,5 +20,7 @@ namespace Parcial2_AP2_EnyerHolguin.Models
 
         [ForeignKey("ClienteId")]
         public virtual Clientes Cliente { get; set; }
+        [ForeignKey("VentaId")]
+        public virtual List<CobrosDetalles> cobrosDetalle { get; set; } = new List<CobrosDetalles>();
     }
 }
