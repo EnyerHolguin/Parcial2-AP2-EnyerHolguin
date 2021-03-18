@@ -15,11 +15,10 @@
                     <div class="form-group">
                         <label>Filtrar por Fecha</label>
                         <select class="form-control" @bind="FiltroFecha">
-                            <option value="0">Todo</option>
-                            <option value="1">Fecha</option>
+                            
                         </select>
                     </div>
-                    &nbsp;
+                    
                     <div class="form-group">
                         <label>Desde</label>
                         <input type="date" @bind="Desde" class="form-control" />
@@ -83,7 +82,12 @@
 {
     string Mensaje = string.Empty;
 
-    public List<Cobros> CobroList { get; set; }
+    List<Cobros> CobroList { get; set; }
+
+    private string[] filtro = { "Id", "No. Facturas Pendientes", "Nombre Cliente", "Fecha", "Monto Total", "Todo" };
+   
+    [Inject]
+    public CobrosBLL cobrosBLL { get; set; }
 
     private DateTime Desde { get; set; } = DateTime.Now;
     private DateTime Hasta { get; set; } = DateTime.Now;
@@ -95,15 +99,9 @@
 
     protected override void OnInitialized()
     {
-        Nuevo();
+
     }
 
-    private void Nuevo()
-    {
-        CobroList = new List<Cobros>();
-        Filtro = "0";
-        Criterio = string.Empty;
-    }
 
     public void Consultar()
     {
@@ -112,14 +110,14 @@
         switch (Filtro)
         {
             case "0": //Todo
-              //  CobroList = CobrosBLL.GetList(c => true);
+                      //  CobroList = CobrosBLL.GetList(c => true);
                 break;
             case "1":
                 if (Criterio.Trim().Length > 0)
                 {
                     try
                     {
-                      //  CobroList = CobrosBLL.GetList(c => c.CobroId == id);
+                        //  CobroList = CobrosBLL.GetList(c => c.CobroId == id);
                     }
                     catch (FormatException)
                     {
@@ -128,7 +126,7 @@
                 }
                 else
                 {
-                   // CobroList = CobrosBLL.GetList(c => true).OrderBy(c => c.CobroId).ToList();
+                    // CobroList = CobrosBLL.GetList(c => true).OrderBy(c => c.CobroId).ToList();
                 }
                 break;
         }

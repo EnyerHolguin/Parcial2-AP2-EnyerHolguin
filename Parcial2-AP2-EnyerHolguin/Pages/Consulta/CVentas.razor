@@ -73,10 +73,9 @@
 </div>
 
 @code {
-
     string Mensaje = string.Empty;
 
-
+    [Inject]
     public VentasBLL ventasBLL { get; set; }
 
     private string[] filtro = { "Id", "Nombre Cliente", "Monto", "Balance", "Todo" };
@@ -106,7 +105,7 @@
                 bool validoId = Int32.TryParse(criterio, out id);
                 if (validoId)
                 {
-                    ventasList = ventasBLL.GetList(v => v.VentaId == id);
+                    ventasList = await ventasBLL.GetList(v => v.VentaId == id);
                 }
                 else
                 {
@@ -114,7 +113,7 @@
                 }
                 break;
             case "Nombre Cliente":
-                ventasList = ventasBLL.GetList(v => v.Cliente.Nombres == criterio);
+                ventasList = await ventasBLL.GetList(v => v.Cliente.Nombres == criterio);
                 break;
 
             case "Monto":
@@ -123,7 +122,7 @@
                 bool validoMonto = Double.TryParse(criterio, out monto);
                 if (validoMonto)
                 {
-                    ventasList = ventasBLL.GetList(v => v.Monto == monto);
+                    ventasList = await ventasBLL.GetList(v => v.Monto == monto);
                 }
                 else
                 {
@@ -136,7 +135,7 @@
                 bool validoBalance = Double.TryParse(criterio, out balance);
                 if (validoBalance)
                 {
-                    ventasList = ventasBLL.GetList(v => v.Balance == balance);
+                    ventasList = await ventasBLL.GetList(v => v.Balance == balance);
                 }
                 else
                 {
@@ -144,7 +143,7 @@
                 }
                 break;
             case "Todo":
-                ventasList = ventasBLL.GetList(v => true);
+                ventasList = await ventasBLL.GetList(v => true);
                 break;
         }
     }

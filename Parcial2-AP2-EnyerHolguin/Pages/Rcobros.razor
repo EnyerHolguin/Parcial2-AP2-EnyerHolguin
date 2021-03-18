@@ -42,8 +42,14 @@
                 <div class="form-group row ">
                     <label class="col-form-label">Cliente ID</label>
                     <div class="input-group">
-                        <InputNumber @bind-Value="this.listaCliente" class="form-control  " />
-                        
+                        <InputSelect @bind-Value="Cobro.ClienteId" class="form-control">
+                           
+                            @foreach (var item in listaCliente)
+                            {
+                                <option value="@item.ClienteId">@item.Nombres</option>
+                            }
+
+                        </InputSelect>
                     </div>
                 </div>
 
@@ -161,15 +167,17 @@
 
     private async void Guardar()
     {
+
+
         Cobro.CobroId = this.CobroId;
         if (await cobrosBLL.Guardar(Cobro))
         {
-            Mensaje = ("Guardado con existo");
+            Mensaje =("Guardado");
             Limpiar();
         }
         else
         {
-            Mensaje = ("No pudo ser guardado.");
+            Mensaje = ("no pudo ser Guardado.");
         }
     }
 
@@ -182,7 +190,7 @@
         }
         else
         {
-            Mensaje = ("No pudo ser eliminado.");
+            Mensaje = ("No pudo ser eliminado no existe .");
         }
     }
 
@@ -192,5 +200,17 @@
         this.CobroId = 0;
     }
 
-   
+    public bool Valida()
+    {
+        if (Cobro.CobrosDetalle.Count == 0)
+        {
+            Mensaje =(" no hay nada que agregar.");
+            return false;
+        }
+
+        return true;
+    }
+
+    
+
 }

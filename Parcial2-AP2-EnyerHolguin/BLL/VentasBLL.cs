@@ -68,7 +68,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
 
             try
             {
-                Detached(venta.VentaId);
+                _contexto.Entry(venta.Cliente).State = EntityState.Modified;
                 _contexto.Entry(venta).State = EntityState.Modified;
                 ok = await _contexto.SaveChangesAsync() > 0;
             }
@@ -132,38 +132,22 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
             return ok;
         }
 
-        public List<Ventas> GetList(Expression<Func<Ventas, bool>> expression)
+        public async Task<List<Ventas>> GetList(Expression<Func<Ventas, bool>> cristerio)
         {
             List<Ventas> Listado;
 
             try
             {
-                Listado = _contexto.Venta.Where(expression).ToList();
-
+                Listado =  await _contexto.Venta.Where(cristerio).Include(c => c.Cliente).ToListAsync();
             }
             catch (Exception)
             {
+
                 throw;
-
-            }
-            finally
-            {
-                _contexto.Dispose();
-
             }
 
             return Listado;
         }
 
-        private void Detached(int VentasId)
-        {
-            var aux = _contexto
-                .Set<Ventas>()
-                .Local
-                .FirstOrDefault(p => p.VentaId == VentasId);
-
-            if (aux != null)
-                _contexto.Entry(aux).State = EntityState.Detached;
-        }
     }
 }
