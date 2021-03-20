@@ -17,10 +17,10 @@ namespace Parcial2_AP2_EnyerHolguin.Models
         [Range(minimum: 10, maximum: 100000)]
         public double Monto { get; set; }
         public double Balance { get; set; }
+        public bool DCobrado { get; set; }
+        public double Cobrado { get; set; }
 
         [ForeignKey("ClienteId")]
         public virtual Clientes Cliente { get; set; }
-        [ForeignKey("VentaId")]
-        public virtual List<CobrosDetalles> cobrosDetalle { get; set; } = new List<CobrosDetalles>();
-    }
+    }   
 }

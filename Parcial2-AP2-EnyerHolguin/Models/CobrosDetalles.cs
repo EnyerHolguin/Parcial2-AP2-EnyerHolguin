@@ -16,8 +16,6 @@ namespace Parcial2_AP2_EnyerHolguin.Models
         public double Balance { get; set; }
         public double Cobrado { get; set; }
 
-        public virtual Cobros Cobro { get; set; }
-        public virtual Ventas Venta { get; set; }
 
     }
 }

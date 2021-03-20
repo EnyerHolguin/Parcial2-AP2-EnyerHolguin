@@ -9,7 +9,7 @@ using Parcial2_AP2_EnyerHolguin.DAL;
 namespace Parcial2_AP2_EnyerHolguin.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210317151158_Inicial")]
+    [Migration("20210318162357_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,8 +68,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     b.Property<string>("Observaciones")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Totales")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Totales")
+                        .HasColumnType("REAL");
 
                     b.HasKey("CobroId");
 
@@ -99,14 +99,9 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     b.Property<double>("Monto")
                         .HasColumnType("REAL");
 
-                    b.Property<int?>("VentaId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CobroId");
-
-                    b.HasIndex("VentaId");
 
                     b.ToTable("CobrosDetalles");
                 });
@@ -121,6 +116,12 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<int>("ClienteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Cobrado")
+                        .HasColumnType("REAL");
+
+                    b.Property<bool>("DCobrado")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
@@ -141,6 +142,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 1,
                             Balance = 1000.0,
                             ClienteId = 1,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 1000.0
                         },
@@ -149,6 +152,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 2,
                             Balance = 800.0,
                             ClienteId = 1,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 900.0
                         },
@@ -157,6 +162,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 3,
                             Balance = 2000.0,
                             ClienteId = 2,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 2000.0
                         },
@@ -165,6 +172,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 4,
                             Balance = 1800.0,
                             ClienteId = 2,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 1900.0
                         },
@@ -173,6 +182,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 5,
                             Balance = 3000.0,
                             ClienteId = 3,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 3000.0
                         },
@@ -181,6 +192,8 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                             VentaId = 6,
                             Balance = 1900.0,
                             ClienteId = 3,
+                            Cobrado = 0.0,
+                            DCobrado = false,
                             Fecha = new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Monto = 2900.0
                         });
@@ -199,19 +212,11 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
 
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.CobrosDetalles", b =>
                 {
-                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Cobros", "Cobro")
+                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Cobros", null)
                         .WithMany("CobrosDetalle")
                         .HasForeignKey("CobroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Parcial2_AP2_EnyerHolguin.Models.Ventas", "Venta")
-                        .WithMany("cobrosDetalle")
-                        .HasForeignKey("VentaId");
-
-                    b.Navigation("Cobro");
-
-                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Ventas", b =>
@@ -228,11 +233,6 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
             modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Cobros", b =>
                 {
                     b.Navigation("CobrosDetalle");
-                });
-
-            modelBuilder.Entity("Parcial2_AP2_EnyerHolguin.Models.Ventas", b =>
-                {
-                    b.Navigation("cobrosDetalle");
                 });
 #pragma warning restore 612, 618
         }

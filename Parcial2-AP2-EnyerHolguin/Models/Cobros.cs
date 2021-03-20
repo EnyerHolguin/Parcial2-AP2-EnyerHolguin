@@ -14,8 +14,9 @@ namespace Parcial2_AP2_EnyerHolguin.Models
         public int ClienteId { get; set; }
         public DateTime Fecha { get; set; }
         public double BalanceCobro { get; set; } 
-        public int Totales { get; set; }
+        public double Totales { get; set; }
         public string Observaciones { get; set; }
+
         [ForeignKey("ClienteId")]
         public virtual Clientes Cliente { get; set; }
 

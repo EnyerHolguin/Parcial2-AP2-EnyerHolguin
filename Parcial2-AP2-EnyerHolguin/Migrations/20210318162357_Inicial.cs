@@ -29,7 +29,7 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     ClienteId = table.Column<int>(type: "INTEGER", nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     BalanceCobro = table.Column<double>(type: "REAL", nullable: false),
-                    Totales = table.Column<int>(type: "INTEGER", nullable: false),
+                    Totales = table.Column<double>(type: "REAL", nullable: false),
                     Observaciones = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -52,7 +52,9 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ClienteId = table.Column<int>(type: "INTEGER", nullable: false),
                     Monto = table.Column<double>(type: "REAL", nullable: false),
-                    Balance = table.Column<double>(type: "REAL", nullable: false)
+                    Balance = table.Column<double>(type: "REAL", nullable: false),
+                    DCobrado = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Cobrado = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,8 +77,7 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Monto = table.Column<double>(type: "REAL", nullable: false),
                     Balance = table.Column<double>(type: "REAL", nullable: false),
-                    Cobrado = table.Column<double>(type: "REAL", nullable: false),
-                    VentaId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Cobrado = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,12 +88,6 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                         principalTable: "Cobro",
                         principalColumn: "CobroId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CobrosDetalles_Venta_VentaId",
-                        column: x => x.VentaId,
-                        principalTable: "Venta",
-                        principalColumn: "VentaId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -112,33 +107,33 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 1, 1000.0, 1, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 1, 1000.0, 1, 0.0, false, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000.0 });
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 2, 800.0, 1, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 900.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 2, 800.0, 1, 0.0, false, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 900.0 });
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 3, 2000.0, 2, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2000.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 3, 2000.0, 2, 0.0, false, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2000.0 });
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 4, 1800.0, 2, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 4, 1800.0, 2, 0.0, false, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1900.0 });
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 5, 3000.0, 3, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3000.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 5, 3000.0, 3, 0.0, false, new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3000.0 });
 
             migrationBuilder.InsertData(
                 table: "Venta",
-                columns: new[] { "VentaId", "Balance", "ClienteId", "Fecha", "Monto" },
-                values: new object[] { 6, 1900.0, 3, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2900.0 });
+                columns: new[] { "VentaId", "Balance", "ClienteId", "Cobrado", "DCobrado", "Fecha", "Monto" },
+                values: new object[] { 6, 1900.0, 3, 0.0, false, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2900.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cobro_ClienteId",
@@ -149,11 +144,6 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                 name: "IX_CobrosDetalles_CobroId",
                 table: "CobrosDetalles",
                 column: "CobroId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CobrosDetalles_VentaId",
-                table: "CobrosDetalles",
-                column: "VentaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Venta_ClienteId",
@@ -167,10 +157,10 @@ namespace Parcial2_AP2_EnyerHolguin.Migrations
                 name: "CobrosDetalles");
 
             migrationBuilder.DropTable(
-                name: "Cobro");
+                name: "Venta");
 
             migrationBuilder.DropTable(
-                name: "Venta");
+                name: "Cobro");
 
             migrationBuilder.DropTable(
                 name: "Cliente");

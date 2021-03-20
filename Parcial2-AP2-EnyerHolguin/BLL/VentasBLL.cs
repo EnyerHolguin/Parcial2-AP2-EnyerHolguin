@@ -50,7 +50,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
 
             try
             {
-                await _contexto.Venta.AddAsync(venta);
+                     _contexto.Venta.Add(venta);
                 ok = await _contexto.SaveChangesAsync() > 0;
             }
             catch (Exception)
@@ -134,7 +134,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
 
         public async Task<List<Ventas>> GetList(Expression<Func<Ventas, bool>> cristerio)
         {
-            List<Ventas> Listado;
+            List<Ventas> Listado = new List<Ventas>();
 
             try
             {

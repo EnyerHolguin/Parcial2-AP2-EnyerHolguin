@@ -94,7 +94,7 @@
     private async void Buscar()
     {
         ventasList = new List<Ventas>();
-        //ventasList = ventasBLL.GetList(e => true);
+
 
 
         switch (opcion)
@@ -142,6 +142,14 @@
                     Mensaje = ("debe introducido un valor numerico.");
                 }
                 break;
+            case "Facturas Pagadas":
+                ventasList = await ventasBLL.GetList(v => v.DCobrado == true);
+                break;
+
+            case "Facturas Pendientes":
+                ventasList = await ventasBLL.GetList(v => v.DCobrado == false);
+                break;
+
             case "Todo":
                 ventasList = await ventasBLL.GetList(v => true);
                 break;

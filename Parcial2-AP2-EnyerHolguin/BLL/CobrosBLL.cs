@@ -26,7 +26,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
             {
                 if (!await _contexto.Cobro.AnyAsync(c => c.CobroId == cobro.CobroId))
                 {
-                    _contexto.Entry(cobro.Cliente).State = EntityState.Modified;
+                   
                     _contexto.Cobro.Add(cobro);
                     ok = await _contexto.SaveChangesAsync() > 0;
                 }
@@ -74,7 +74,7 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
         public async Task<bool> Eliminar(int id)
         {
             bool ok = false;
-
+            bool ok1 = Restablece(id);
             try
             {
                 var registro = await Buscar(id);
@@ -90,11 +90,11 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
                 throw;
             }
 
-            return ok;
+            return ok == true && ok1 == true; ;
         }
 
 
-        public async Task<List<Cobros>> GetCobros(Expression<Func<Cobros, bool>> criterio)
+        public async Task<List<Cobros>> GetList(Expression<Func<Cobros, bool>> criterio)
         {
             List<Cobros> lista = new List<Cobros>();
 
@@ -110,5 +110,25 @@ namespace Parcial2_AP2_EnyerHolguin.BLL
 
             return lista;
         }
+        private bool Restablece(int id)
+        {
+            bool ok = false;
+            List<Ventas> lista = new List<Ventas>();
+            foreach (var item in _contexto.Venta.Where(v => v.ClienteId == id).ToList())
+            {
+                if (item.DCobrado == true)
+                {
+                    item.DCobrado = false;
+                    item.Cobrado = 0;
+                    lista.Add(item);
+                }
+            }
+
+            _contexto.UpdateRange(lista);
+            ok = _contexto.SaveChanges() > 0;
+
+            return ok;
+        }
     }
+
 }
